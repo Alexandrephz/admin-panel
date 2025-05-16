@@ -34,7 +34,7 @@ public class PromptServiceImplementation implements PromptService {
         System.out.println(prompts);
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(new ApiResponseDto<>(ApiResponseStatus.SUCCESS.name(), "ola"));
+                .body(new ApiResponseDto<>(ApiResponseStatus.SUCCESS.name(), prompts));
     }
 
     @Override
