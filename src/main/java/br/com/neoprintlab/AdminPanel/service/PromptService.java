@@ -1,58 +1,33 @@
 package br.com.neoprintlab.AdminPanel.service;
 
-import br.com.neoprintlab.AdminPanel.dto.PromptDto;
-import br.com.neoprintlab.AdminPanel.model.entity.Prompt;
-import br.com.neoprintlab.AdminPanel.repository.PromptRepository;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import br.com.neoprintlab.AdminPanel.dto.request.PromptDto;
+import br.com.neoprintlab.AdminPanel.dto.response.ApiResponseDto;
+import br.com.neoprintlab.AdminPanel.exception.NumberofPromptsExceededException;
+import br.com.neoprintlab.AdminPanel.exception.PromptAlreadyExistsException;
+import br.com.neoprintlab.AdminPanel.exception.PromptNotFoundException;
+import br.com.neoprintlab.AdminPanel.exception.PromptServiceLogicException;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
-@RequiredArgsConstructor
-@Slf4j
-public class PromptService {
-    @Autowired
-    private PromptRepository promptRepository;
-    @Autowired
-    private ObjectMapper objectMapper;
+public interface PromptService {
+    ResponseEntity<ApiResponseDto<?>> getAllPrompts()
+        throws PromptServiceLogicException;
 
-    public List<Prompt> getActivePrompts() {
-        return promptRepository.findByActiveTrue();
-    }
+    ResponseEntity<ApiResponseDto<?>> getPromptById(UUID id)
+            throws PromptServiceLogicException, PromptNotFoundException;
 
-    public List<Prompt> getPromptsByCategory(String category) {
-        return promptRepository.findByCategoryAndActiveTrue(category);
-    }
+    ResponseEntity<ApiResponseDto<?>> createPrompt(@Valid PromptDto promptDto)
+            throws PromptServiceLogicException, PromptAlreadyExistsException, NumberofPromptsExceededException;
 
-    public List<Prompt> getAllPrompts() {
-        return promptRepository.findAll();
-    }
+    ResponseEntity<ApiResponseDto<?>> updatePrompt(UUID id, @Valid PromptDto promptDto)
+            throws PromptServiceLogicException, PromptNotFoundException;;
 
-    public Prompt getPromptById(UUID id) {
-        return promptRepository.getReferenceById(id);
-    }
+    ResponseEntity<ApiResponseDto<?>> deletePrompt(UUID id)
+            throws PromptServiceLogicException, PromptNotFoundException;;
 
-    public Prompt createPrompt(@Valid PromptDto promptDto) {
-        Prompt newPrompt = new Prompt(promptDto);
-        promptRepository.save(newPrompt);
-        return newPrompt;
-    }
 
-    public Prompt updatePrompt(UUID id, @Valid PromptDto promptDto) throws JsonMappingException {
-        Prompt prompt = promptRepository.getReferenceById(id);
-        objectMapper.updateValue(prompt, promptDto);
-        promptRepository.save(prompt);
-        return prompt;
-    }
-
-    public void deletePrompt(UUID id) {
-    }
 }

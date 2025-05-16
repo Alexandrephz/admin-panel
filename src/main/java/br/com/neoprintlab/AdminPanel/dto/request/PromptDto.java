@@ -1,10 +1,8 @@
-package br.com.neoprintlab.AdminPanel.dto;
+package br.com.neoprintlab.AdminPanel.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.UUID;
 
 @Data
 @AllArgsConstructor

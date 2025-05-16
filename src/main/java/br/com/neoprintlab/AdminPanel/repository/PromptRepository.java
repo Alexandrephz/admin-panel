@@ -10,13 +10,13 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface PromptRepository extends JpaRepository<Prompt, UUID> {
+public interface PromptRepository extends JpaRepository<Prompt, Long> {
 
     List<Prompt> findByActiveTrue();
 
     List<Prompt> findByCategoryAndActiveTrue(String category);
 
-    Optional<Prompt> findById(UUID uuid);
+    Optional<Prompt> findById(Long id);
 
     @Query("SELECT p FROM Prompt p WHERE :tag MEMBER OF p.tags AND p.active = true")
     List<Prompt> findByTagAndActive(String tag);
