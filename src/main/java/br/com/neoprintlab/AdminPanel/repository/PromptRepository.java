@@ -13,4 +13,5 @@ import java.util.UUID;
 public interface PromptRepository extends JpaRepository<Prompt, Long> {
 
     List<Prompt> findByActiveTrue();
+    Long countByActiveTrue();
 }

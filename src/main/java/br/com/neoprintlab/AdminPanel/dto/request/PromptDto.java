@@ -8,11 +8,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PromptDto {
-    private String title;
+    private String name;
     private String content;
     private String category;
-    private String ai_service;
-    private String is_active;
 }
 
 

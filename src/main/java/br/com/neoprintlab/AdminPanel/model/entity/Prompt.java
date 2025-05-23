@@ -1,5 +1,6 @@
 package br.com.neoprintlab.AdminPanel.model.entity;
 
+import br.com.neoprintlab.AdminPanel.dto.request.PromptDto;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
